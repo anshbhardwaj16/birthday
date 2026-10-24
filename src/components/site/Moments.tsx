@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import PhotoArt from "../art/PhotoArt";
 import { H2 } from "./Section";
 import { content } from "@/config/content";
+import { assetPath } from "@/lib/paths";
 
 type Moment = (typeof content.moments)[number];
 
@@ -13,7 +14,7 @@ const TILTS = [-3, 2.2, -1.4, 3, -2.4, 1.6];
 
 function Picture({ m, className }: { m: Moment; className?: string }) {
   // eslint-disable-next-line @next/next/no-img-element
-  if (m.image) return <img src={m.image} alt={m.caption} className={className} draggable={false} />;
+  if (m.image) return <img src={assetPath(m.image)} alt={m.caption} className={className} draggable={false} />;
   return <PhotoArt tone={m.tone} className={className} />;
 }
 

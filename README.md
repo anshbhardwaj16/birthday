@@ -87,5 +87,13 @@ The music box starts its tune from the beginning each time it comes back.
 
 ## Deploying
 
-It's a standard Next.js app, so Vercel, Netlify or any Node host works. Use a host that
-returns a `Date` header (almost all do) so the clock correction works.
+Push to `main` to build and deploy the static site to GitHub Pages. The workflow also
+supports a manual run from the Actions tab. In the repository settings, set **Pages >
+Build and deployment > Source** to **GitHub Actions**.
+
+The workflow configures the repository subpath automatically (for example,
+`https://<owner>.github.io/birthday/`) and also supports a user or organization site
+repository (`<owner>.github.io`). For the clock correction to work, use a host that
+returns a `Date` header.
+
+Vercel, Netlify or any Node host can also run the app with `npm run build && npm start`.

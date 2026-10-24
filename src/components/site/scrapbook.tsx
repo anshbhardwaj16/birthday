@@ -7,6 +7,7 @@ import { photos, showEmptySlots } from "@/config/media";
 import { Lightbox, type LightboxItem } from "@/components/media/lightbox";
 import { FilePath, Hint, MediaHeading, PhotoIcon, parseRatio } from "@/components/media/parts";
 import styles from "@/components/media/media.module.css";
+import { assetPath } from "@/lib/paths";
 
 // A loose, hand-placed look. Sizes, tilts and tape repeat every six photos.
 const LOOK = [
@@ -22,7 +23,9 @@ const LOOK = [
 const viewable: LightboxItem[] = [];
 const slots = photos.items.flatMap((photo, i) => {
   if (!photo.src && !showEmptySlots) return [];
-  const view = photo.src ? viewable.push({ src: photo.src, alt: photo.alt, caption: photo.caption }) - 1 : null;
+  const view = photo.src
+    ? viewable.push({ src: assetPath(photo.src), alt: photo.alt, caption: photo.caption }) - 1
+    : null;
   return [{ ...photo, number: i + 1, view }];
 });
 
@@ -60,7 +63,7 @@ export function Scrapbook() {
                 >
                   <span className={styles.frame} style={frameStyle}>
                     <Image
-                      src={photo.src}
+                      src={assetPath(photo.src)}
                       alt={photo.alt}
                       fill
                       sizes="(max-width: 640px) 100vw, 440px"

@@ -9,13 +9,14 @@ import { collage, showEmptySlots } from "@/config/media";
 import { Lightbox, type LightboxItem } from "@/components/media/lightbox";
 import { FilePath, Hint, MediaHeading, parseRatio } from "@/components/media/parts";
 import styles from "@/components/media/media.module.css";
+import { assetPath } from "@/lib/paths";
 
 const ratio = parseRatio(collage.ratio, 4 / 5);
 const landscape = ratio > 1.1;
 const [COLS, ROWS] = collage.pieces ?? (ratio < 0.9 ? [4, 5] : landscape ? [6, 4] : [5, 5]);
 // Matches the board's max width in media.module.css.
 const SIZES = landscape ? "(max-width: 1000px) 100vw, 960px" : "(max-width: 600px) 100vw, 544px";
-const ZOOM: LightboxItem[] = [{ src: collage.src, alt: collage.alt }];
+const ZOOM: LightboxItem[] = [{ src: assetPath(collage.src), alt: collage.alt }];
 const PLACEHOLDER = collage.src ? "" : placeholderArt(ratio);
 
 /** Small, repeatable pseudo-random numbers so the scatter is the same on every load. */
@@ -62,7 +63,7 @@ export function Collage() {
 
   const fill = (alt: string) =>
     collage.src ? (
-      <Image src={collage.src} alt={alt} fill sizes={SIZES} className={styles.cover} draggable={false} />
+      <Image src={assetPath(collage.src)} alt={alt} fill sizes={SIZES} className={styles.cover} draggable={false} />
     ) : (
       <span className={styles.fillBg} style={{ backgroundImage: `url("${PLACEHOLDER}")` }} />
     );

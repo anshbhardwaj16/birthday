@@ -6,6 +6,7 @@ import { motion, useInView, useReducedMotion } from "framer-motion";
 import { Play, RotateCcw } from "lucide-react";
 import { videos } from "@/config/media";
 import { announceMedia } from "@/lib/mediabus";
+import { assetPath } from "@/lib/paths";
 import { MediaHeading, parseRatio } from "@/components/media/parts";
 import styles from "@/components/media/media.module.css";
 
@@ -101,8 +102,8 @@ function VideoStage({ item }: { item: (typeof videos)[number] }) {
       <video
         ref={videoRef}
         className={styles.video}
-        src={item.src}
-        poster={item.poster || undefined}
+        src={assetPath(item.src)}
+        poster={item.poster ? assetPath(item.poster) : undefined}
         preload="metadata"
         playsInline
         controls={open}
@@ -115,7 +116,7 @@ function VideoStage({ item }: { item: (typeof videos)[number] }) {
         }}
       >
         {item.captions ? (
-          <track kind="captions" src={item.captions} srcLang="en" label="Captions" default />
+          <track kind="captions" src={assetPath(item.captions)} srcLang="en" label="Captions" default />
         ) : null}
       </video>
 
