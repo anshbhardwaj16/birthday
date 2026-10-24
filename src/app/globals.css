@@ -1,0 +1,258 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Design tokens — "Unwrapped"
+   cobalt paper, pink satin ribbon, butter yellow inside the box.
+--------------------------------------------------------------------------- */
+@theme {
+  --color-cobalt: #2b35e8;
+  --color-cobalt-deep: #1a22b0;
+  --color-cobalt-light: #5f68ff;
+  --color-ink: #0f1033;
+  --color-ribbon: #ffb6cf;
+  --color-ribbon-deep: #ff94b9;
+  --color-butter: #ffd95a;
+  --color-tangerine: #ff6a2b;
+  --color-milk: #f7f5ff;
+
+  --font-display: "Bricolage Grotesque Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--color-ink);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-display);
+  color: var(--color-ink);
+  background: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-tangerine);
+  color: var(--color-milk);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-ink);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 3px var(--color-milk);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Everything below sits in the components layer, so Tailwind utilities
+   (absolute, inset-0, …) always win over these helpers. */
+@layer components {
+/* ---------------------------------------------------------------------------
+   Type voices
+--------------------------------------------------------------------------- */
+/* Poster: heavy + condensed, for the big statements and numerals */
+.poster {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-stretch: 75%;
+  letter-spacing: -0.012em;
+  word-spacing: 0.06em;
+  line-height: 0.86;
+}
+
+/* Display: headings that sit under the poster type */
+.display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-stretch: 85%;
+  letter-spacing: -0.008em;
+  word-spacing: 0.04em;
+  line-height: 0.96;
+}
+
+/* Voice: the personal, hand-written feeling text */
+.voice {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  line-height: 1.25;
+}
+
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------------------------------------------------------------------------
+   Materials
+--------------------------------------------------------------------------- */
+/* Tone-on-tone wrapping paper print */
+.paper {
+  background-color: var(--color-cobalt);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='132' height='132'%3E%3Cg fill='none' stroke='%23fff' stroke-opacity='.11' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 24v12M14 30h12'/%3E%3Ccircle cx='88' cy='22' r='4.5'/%3E%3Cpath d='M66 78l3.2 7.2 7.8.8-5.8 5.3 1.7 7.7-6.9-4-6.9 4 1.7-7.7-5.8-5.3 7.8-.8z'/%3E%3Cpath d='M100 96q6-8 12 0t12 0'/%3E%3Ccircle cx='26' cy='100' r='2.6' fill='%23fff' fill-opacity='.11' stroke='none'/%3E%3Ccircle cx='112' cy='54' r='2' fill='%23fff' fill-opacity='.11' stroke='none'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 132px 132px;
+}
+
+/* Fine paper grain, laid over anything with .grain */
+.grain {
+  position: relative;
+}
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.2;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* A ticket outline: round notches bitten out of the left and right edges */
+.ticket {
+  --notch: 1.15rem;
+  -webkit-mask:
+    radial-gradient(circle var(--notch) at 0 50%, #0000 97%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle var(--notch) at 100% 50%, #0000 97%, #000) right / 51% 100% no-repeat;
+  mask:
+    radial-gradient(circle var(--notch) at 0 50%, #0000 97%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle var(--notch) at 100% 50%, #0000 97%, #000) right / 51% 100% no-repeat;
+}
+
+/* Satin ribbon: base colour set per element, sheen + edge stitching here */
+.satin {
+  background-image:
+    linear-gradient(
+      180deg,
+      rgb(255 255 255 / 0.5) 0%,
+      rgb(255 255 255 / 0) 22%,
+      rgb(255 255 255 / 0) 62%,
+      rgb(120 10 60 / 0.16) 100%
+    );
+}
+.satin-v {
+  background-image:
+    linear-gradient(
+      90deg,
+      rgb(120 10 60 / 0.14) 0%,
+      rgb(255 255 255 / 0.4) 22%,
+      rgb(255 255 255 / 0) 48%,
+      rgb(255 255 255 / 0) 72%,
+      rgb(120 10 60 / 0.16) 100%
+    );
+}
+
+/* ---------------------------------------------------------------------------
+   Motion
+--------------------------------------------------------------------------- */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee var(--marquee-duration, 40s) linear infinite;
+}
+.marquee-track.reverse {
+  animation-direction: reverse;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes flicker {
+  0% {
+    transform: scale(1, 1) rotate(-1.5deg);
+  }
+  50% {
+    transform: scale(0.94, 1.06) rotate(1deg);
+  }
+  100% {
+    transform: scale(1.04, 0.96) rotate(-0.5deg);
+  }
+}
+.flame {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: flicker 0.32s ease-in-out infinite alternate;
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.spin-slow {
+  animation: spin-slow 22s linear infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(1.7);
+    opacity: 0;
+  }
+}
+.pulse-ring {
+  animation: pulse-ring 1.8s ease-out infinite;
+}
+
+@keyframes smoke {
+  0% {
+    transform: translateY(0) scaleX(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(-46px) scaleX(1.8);
+    opacity: 0;
+  }
+}
+.smoke {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: smoke 1.8s ease-out forwards;
+}
+
+@keyframes balloon-rise {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(var(--drift, 0px), calc(-1 * var(--rise, 110vh)), 0);
+  }
+}
+.balloon-rise {
+  animation: balloon-rise var(--duration, 6s) linear forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+  .spin-slow,
+  .pulse-ring,
+  .flame {
+    animation: none;
+  }
+}
+
+/* Horizontal scrollers without the scrollbar */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+} /* end @layer components */

@@ -1,0 +1,139 @@
+"use client";
+
+import { useEffect, useId, useRef, useState, type CSSProperties } from "react";
+import clsx from "clsx";
+import { motion, useInView, useReducedMotion } from "framer-motion";
+import { Play, RotateCcw } from "lucide-react";
+import { videos } from "@/config/media";
+import { announceMedia } from "@/lib/mediabus";
+import { MediaHeading, parseRatio } from "@/components/media/parts";
+import styles from "@/components/media/media.module.css";
+
+const PART_EASE: [number, number, number, number] = [0.7, 0, 0.3, 1];
+
+type FullscreenVideo = HTMLVideoElement & { webkitDisplayingFullscreen?: boolean };
+
+export function VideoMessage() {
+  const headingId = useId();
+  const [selected, setSelected] = useState(0);
+  const current = videos[selected];
+
+  if (!current) return null;
+
+  return (
+    <section aria-labelledby={headingId} className={clsx(styles.vars, styles.band, styles.screening)}>
+      <MediaHeading id={headingId} title="Videos" />
+      <div className="mx-auto mb-6 flex max-w-[60rem] flex-wrap justify-center gap-3">
+        {videos.map((item, index) => (
+          <button
+            key={item.src}
+            type="button"
+            aria-pressed={selected === index}
+            onClick={() => setSelected(index)}
+            className={clsx(
+              "rounded-full border px-5 py-3 text-sm font-semibold transition-colors",
+              selected === index
+                ? "border-[var(--m-gold)] bg-[var(--m-gold)] text-[var(--m-stage)]"
+                : "border-white/40 text-white hover:border-white",
+            )}
+          >
+            {item.title}
+          </button>
+        ))}
+      </div>
+      <VideoStage key={current.src} item={current} />
+    </section>
+  );
+}
+
+function VideoStage({ item }: { item: (typeof videos)[number] }) {
+  const ratio = parseRatio(item.ratio, 16 / 9);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [open, setOpen] = useState(false);
+  const [watched, setWatched] = useState(false);
+  const reduce = useReducedMotion();
+  const inView = useInView(stageRef, { amount: 0.3 });
+
+  // Scrolling away pauses the video (but not while it's fullscreen).
+  useEffect(() => {
+    const element = videoRef.current as FullscreenVideo | null;
+    if (inView || !element || document.fullscreenElement || element.webkitDisplayingFullscreen) return;
+    element.pause();
+  }, [inView]);
+
+  // If the section unmounts mid-video, let the music come back.
+  useEffect(() => {
+    const element = videoRef.current;
+    return () => {
+      if (element && !element.paused) announceMedia(false);
+    };
+  }, []);
+
+  const start = () => {
+    setOpen(true);
+    const element = videoRef.current;
+    if (!element) return;
+    if (element.ended) element.currentTime = 0;
+    // Called straight from the tap, so the browser allows sound.
+    element.play().catch(() => {
+      // Blocked or interrupted. The native controls are showing, so a second tap works.
+    });
+  };
+
+  const curtain = (side: "left" | "right") => (
+    <motion.span
+      aria-hidden="true"
+      className={clsx(styles.curtain, side === "left" ? styles.curtainLeft : styles.curtainRight)}
+      initial={false}
+      animate={{ x: open ? (side === "left" ? "-100%" : "100%") : "0%" }}
+      transition={{ duration: reduce ? 0 : 1.15, ease: PART_EASE }}
+    />
+  );
+
+  return (
+    <div
+      ref={stageRef}
+      className={styles.stage}
+      style={{ "--ratio": ratio } as CSSProperties}
+      data-portrait={ratio < 1}
+    >
+      <video
+        ref={videoRef}
+        className={styles.video}
+        src={item.src}
+        poster={item.poster || undefined}
+        preload="metadata"
+        playsInline
+        controls={open}
+        aria-label={item.title}
+        onPlay={() => announceMedia(true)}
+        onPause={() => announceMedia(false)}
+        onEnded={() => {
+          setOpen(false);
+          setWatched(true);
+        }}
+      >
+        {item.captions ? (
+          <track kind="captions" src={item.captions} srcLang="en" label="Captions" default />
+        ) : null}
+      </video>
+
+      {curtain("left")}
+      {curtain("right")}
+
+      {!open ? (
+        <div className={styles.overlay}>
+          <button type="button" className={styles.playButton} onClick={start}>
+            {watched ? (
+              <RotateCcw size={18} aria-hidden="true" />
+            ) : (
+              <Play size={18} aria-hidden="true" fill="currentColor" />
+            )}
+            {watched ? "Watch again" : "Play the video"}
+          </button>
+        </div>
+      ) : null}
+    </div>
+  );
+}
