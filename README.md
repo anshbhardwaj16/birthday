@@ -12,7 +12,7 @@ in code.
 ```bash
 npm install
 npm run dev      # http://localhost:3100
-npm run build && npm start
+npm run build    # static site in out/
 ```
 
 ## Make it theirs
@@ -96,4 +96,5 @@ The workflow configures the repository subpath automatically (for example,
 repository (`<owner>.github.io`). For the clock correction to work, use a host that
 returns a `Date` header.
 
-Vercel, Netlify or any Node host can also run the app with `npm run build && npm start`.
+The build is a static export, so `out/` can also be deployed to Vercel, Netlify or any
+static host.
