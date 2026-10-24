@@ -18,10 +18,10 @@ export const settings = {
    * which is what you want for a birthday ("00:00 wherever you are").
    * To pin one exact instant for everyone, add an offset, e.g. "2026-11-15T00:00:00+05:30".
    */
-  unlockAt: "2026-10-25T00:04:00",
+  unlockAt: "2026-10-30T00:00:00",
 
   /** Their date of birth (YYYY-MM-DD). Drives the age, star sign and "by the numbers". */
-  birthDate: "2000-10-25",
+  birthDate: "2000-10-30",
 
   /** One-liners that rotate under the countdown. Keep them free of spoilers. */
   teasers: [
