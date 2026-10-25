@@ -19,7 +19,9 @@ function Entry({ item }: { item: (typeof content.story)[number] }) {
       />
       <p className="poster text-[clamp(3.6rem,8.4vw,7.4rem)] text-cobalt">{item.year}</p>
       <h3 className="display mt-3 text-[clamp(1.7rem,3.2vw,2.6rem)]">{item.title}</h3>
-      <p className="voice mt-3 max-w-[30ch] text-[clamp(1.3rem,2.3vw,1.85rem)]">{item.text}</p>
+      <p className="voice mt-3 max-w-[30ch] text-[clamp(1.3rem,2.3vw,1.85rem)]">
+        {item.italic ? <em>{item.text}</em> : item.text}
+      </p>
     </li>
   );
 }

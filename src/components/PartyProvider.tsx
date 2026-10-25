@@ -42,13 +42,12 @@ export function PartyProvider({
   musicActive,
 }: {
   children: React.ReactNode;
-  /** The music box only plays once the site itself is showing. */
   musicActive: boolean;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fxRef = useRef<Fx | null>(null);
   const reduced = useReducedMotion();
-  const [soundOn, setSoundOn] = useState(false);
+  const [soundOn, setSoundOn] = useState(true);
   const [mediaPlaying, setMediaPlaying] = useState(false);
 
   useEffect(() => {
@@ -69,16 +68,19 @@ export function PartyProvider({
   useEffect(() => {
     if (soundOn && musicActive && !mediaPlaying) sound.startMusic();
     else sound.stopMusic();
-    return () => sound.stopMusic();
   }, [soundOn, musicActive, mediaPlaying]);
+
+  useEffect(() => () => sound.stopMusic(), []);
 
   const setSound = useCallback((on: boolean) => {
     // Must run inside the click handler so the browser allows audio.
     sound.setEnabled(on);
+    if (on && musicActive && !mediaPlaying) sound.startMusic();
+    else sound.stopMusic();
     setSoundOn(on);
-  }, []);
+  }, [mediaPlaying, musicActive]);
 
-  const toggleSound = useCallback(() => setSound(!sound.enabled), [setSound]);
+  const toggleSound = useCallback(() => setSound(!soundOn), [setSound, soundOn]);
 
   const value = useMemo<Party>(
     () => ({

@@ -44,7 +44,7 @@ export default function Controls() {
       />
       <div className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-[max(1rem,env(safe-area-inset-right))] z-50 flex flex-col gap-3">
         <RoundButton
-          label={party.soundOn ? "Mute the music" : "Play the music"}
+          label={party.soundOn ? "Mute Happy Birthday music" : "Play Happy Birthday music"}
           pressed={party.soundOn}
           onClick={party.toggleSound}
         >

@@ -2,7 +2,7 @@
 
 /**
  * All the sound is synthesised with the Web Audio API, so the site needs no audio
- * files: a music-box "Happy Birthday" plus a handful of little effects.
+ * files: a synthesized "Happy Birthday" tune plus a handful of little effects.
  *
  * Browsers only allow audio after a tap, so nothing here makes a sound until
  * `sound.setEnabled(true)` has been called from a user gesture.
@@ -192,27 +192,22 @@ function play(name: SfxName, arg = 0) {
 }
 
 // ---------------------------------------------------------------------------
-// The music box
+// Music box
 // ---------------------------------------------------------------------------
 
 const BEAT = 60 / 92;
-
-// [MIDI note, length in beats]. 3/4 time, 8 bars.
 const MELODY: [number, number][] = [
   [67, 0.75], [67, 0.25], [69, 1], [67, 1], [72, 1], [71, 2],
   [67, 0.75], [67, 0.25], [69, 1], [67, 1], [74, 1], [72, 2],
   [67, 0.75], [67, 0.25], [79, 1], [76, 1], [72, 1], [71, 1], [69, 1],
   [77, 0.75], [77, 0.25], [76, 1], [72, 1], [74, 1], [72, 2],
 ];
-
 const CHORDS = {
   C: { bass: 48, triad: [60, 64, 67] },
   G: { bass: 43, triad: [59, 62, 65] },
   F: { bass: 41, triad: [57, 60, 65] },
 } as const;
 const BARS: (keyof typeof CHORDS)[] = ["C", "G", "G", "C", "C", "F", "F", "C"];
-
-// Each pass of the tune climbs or falls a little, so the loop never feels stuck.
 const SHIFTS = [0, 2, 4, -2];
 
 function loop(gr: Graph, at: number) {
@@ -231,13 +226,13 @@ function loop(gr: Graph, at: number) {
     const t0 = at + i * 3 * BEAT;
     pluck(gr, dest, midi(chord.bass + shift), t0, 1.2, 0.2, 0.3);
     for (const beat of [1, 2]) {
-      chord.triad.forEach((n, k) =>
-        pluck(gr, dest, midi(n + shift), t0 + beat * BEAT + k * 0.014, 0.6, 0.075, 0.5),
+      chord.triad.forEach((note, index) =>
+        pluck(gr, dest, midi(note + shift), t0 + beat * BEAT + index * 0.014, 0.6, 0.075, 0.5),
       );
     }
   });
 
-  const length = 27 * BEAT; // 8 bars of tune and a bar of rest
+  const length = 27 * BEAT;
   const next = Math.max(at + length, gr.ctx.currentTime + 0.1);
   timer = setTimeout(
     () => loop(gr, next),
@@ -252,7 +247,8 @@ function startMusic() {
   running = true;
   const b = gr.ctx.createGain();
   b.gain.value = 0.0001;
-  b.gain.setTargetAtTime(0.5, gr.ctx.currentTime, 0.6);
+  b.gain.setTargetAtTime(0.2, gr.ctx.currentTime, 0.6);
+  loops = 0;
   b.connect(gr.master);
   b.connect(gr.reverb);
   bus = b;

@@ -17,11 +17,12 @@ export const content = {
   letter: {
     greeting: `Dear ${name},`,
     paragraphs: [
-      "I wanted to give you something that couldn't be bought in a hurry, so I built this instead. It took a while. You were worth every minute.",
-      "I know me as well as you were manifesting to celebrate your birthday together, but you know the situation, nvm we will meet soon along with Manish Mama",
-      "You know you are my first love, I love you to the moon and back. May this year brings you everything you want.",
+      "I wanted to give you something that I know the best, and you love the most so I made this. I am creating this when I am missing you the most.",
+      "I know you as well as myself were manifesting to celebrate your birthday together, but you know the situation, nvm we will plan a vacation along with Manish Mama in next month.🏖️",
+      "You know you are my first and only love, I love you to the moon and back. May this year brings you everything you want.🤞",
     ],
-    signoff: "With all my love,",
+    signoff:[ "With all my love❤️,",
+    " Happiest Birthday My Devi Rani👑, My Rasmal-AI😋, My Everything🌍"]
   },
 
   /** Years are free text, so "Summer 2019" works too. */
@@ -29,11 +30,12 @@ export const content = {
     {
       year: "December 29th 2025",
       title: "The day we had our first one to one call",
-      text: "The Autoheal Agent, our matchmaker, are yaar! aapne 4 bje kyu rakh di call, 4:30 ya 5 rakh dete, meri shift khtm ho jaati, Prerna bhi nhi hai.",
+      text: "The Autoheal Agent, our matchmaker, Are yaawr! aapne 4 bje kyu rakh di call, 4:30 ya 5 rakh dete, meri shift khtm ho jaati, Prerna bhi nhi hai.",
+      italic: true,
     },
     {
       year: "January 15th 2026",
-      title: "Your Reel! Naam tera dil pe likhaan de phire",
+      title: "Your first Reel for me! Naam tera dil pe likhaan de phire",
       text: "I was travelling to Office, mai buddhu ko smj bhi nhi aaya, what you were trying to show, you sent the reel again to make me notice",
     },
     {
@@ -64,7 +66,7 @@ export const content = {
     { tone: 1, alt: "Photo 2", image: "/media/photos/IMG-20260713-WA0199.jpg" },
     { tone: 2, alt: "Photo 3", image: "/media/photos/IMG-20260713-WA0200.jpg" },
     { tone: 3, alt: "Photo 4", image: "/media/photos/IMG-20260713-WA0204-2.jpg" },
-    { tone: 4, alt: "Photo 5", image: "/media/photos/IMG-20260713-WA0204.jpg" },
+    // { tone: 4, alt: "Photo 5", image: "/media/photos/IMG-20260713-WA0204.jpg" },
     { tone: 5, alt: "Photo 6", image: "/media/photos/IMG-20260713-WA0207.jpg" },
     { tone: 0, alt: "Photo 7", image: "/media/photos/IMG-20260713-WA0235.jpg" },
     { tone: 1, alt: "Photo 8", image: "/media/photos/Snapchat-1040214177.jpg" },
@@ -78,68 +80,25 @@ export const content = {
 
   /** Keep each under about 70 characters so it fits on a sticker. */
   reasons: [
-    "You make everyone feel like the main character.",
-    "Your laugh arrives before the joke does.",
-    "You remember the small things.",
-    "You show up. Every time, no questions asked.",
-    "Your playlists are dangerously good.",
-    "You're braver than you give yourself credit for.",
-    "You turn bad days into stories worth telling.",
+    "You make me feel like the main character.",
+    "You turn up to me just to update me for the tiniest thing happened",
+    "You show up. Every time, no questions asked from filling RTOs to Certificates.",
+    "You remember even the small things.",
+    "Your playlists are dangerously good. 2000's song are damm",
+    "You're strong than you give yourself credit for.",
+    "Your taste in movies. The OGs of Bollywood",
     "You give great advice, then ignore it yourself.",
-    "You're always up for one more adventure.",
-    "Your kindness is never for show.",
+    "Your love, affection and care for me",
+    "Your love for reality shows",
     "You make quiet moments feel full.",
-    "You are, quite simply, one of the good ones.",
-  ],
-
-  wishes: [
-    {
-      from: "Mum & Dad",
-      note: "family",
-      text: "Our favourite person since day one. We're so proud of who you've become.",
-    },
-    {
-      from: "Priya",
-      note: "best friend",
-      text: "Thank you for every 2am conversation. Happy birthday to my person.",
-    },
-    {
-      from: "Jordan",
-      note: "teammate",
-      text: "Best colleague, worst at keeping secrets. Have the day you deserve.",
-    },
-    {
-      from: "Grandma",
-      note: "family",
-      text: "Eat the cake. Then eat a second slice. That's an order.",
-    },
-    {
-      from: "Marcus",
-      note: "old friend",
-      text: "Another year older and I'm still not catching up. Happy birthday!",
-    },
-    {
-      from: "Chloe",
-      note: "neighbour",
-      text: "You make the whole street brighter. Enjoy every minute today.",
-    },
-    {
-      from: "Sam",
-      note: "the one who built this",
-      text: "Look at that. You made it to another year. Slightly alarming, mostly wonderful.",
-    },
-    {
-      from: "The whole team",
-      note: "everyone",
-      text: "Cake is in the fridge. Do not tell anyone we told you.",
-    },
+    "You are, quite simply, THE BEST.",
   ],
 
   /** The scratch card. */
   gift: {
-    title: "One dinner, your choice",
-    text: "Any place, any city, any craving. I'll book it and I'll pay.",
-    fine: `Redeem by telling ${from}. Valid all year, no take-backs.`,
+    title: "Anything in this world which makes you happy",
+    text: "Any place, any city, any craving. I'll make sure, I will fulfil.",
+    fine: `Redeem by telling ${from}. Valid whole life, no take-backs.`,
   },
 
   footer: {

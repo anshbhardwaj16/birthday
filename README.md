@@ -61,21 +61,22 @@ These work while `allowPreviewLinks` is `true` in `settings.ts`:
   bundle. Don't put anything truly private in `content.ts`.
 - Opening the page after the time has passed shows the "Unwrap" knot, so the first tap
   also allows sound.
-- Music starts only after the reveal. The speaker button (bottom right) mutes it.
+- Happy Birthday music is on by default after the surprise is unwrapped. The speaker
+  button on the locked screen lets visitors mute it before unwrapping.
 
 ## Music and the video
 
-This is already wired up, so there's nothing to add. The video sends a signal through
-`src/lib/mediabus.ts` when it plays or pauses. `src/components/PartyProvider.tsx` listens
-for it, fades the music out while the video plays and starts it again afterwards. If the
-visitor had muted the music, it stays muted.
+The synthesized Happy Birthday music starts when the surprise is revealed. The video
+sends a signal through `src/lib/mediabus.ts` when it plays or pauses.
+`src/components/PartyProvider.tsx` listens for it, pauses the music while the video plays
+and starts it again afterwards. If the visitor muted the music, it stays muted.
 
-The music box starts its tune from the beginning each time it comes back.
+The current tune starts again when the music comes back.
 
 ## Features
 
 - Rolling-odometer countdown printed on the ribbon, with a 10-second final countdown
-- Cut-and-part unwrap, confetti cannons, fireworks and a synthesized music-box "Happy Birthday"
+- Cut-and-part unwrap, confetti cannons, fireworks and a synthesized Happy Birthday tune
 - Hero poster with pop-able balloons and a rotating age seal
 - Sealed letter, life in numbers (live seconds counter, star sign, birthstone), story timeline
 - Polaroid strip with lightbox, flip-over reason stickers, scrolling wall of messages

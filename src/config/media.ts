@@ -70,8 +70,8 @@ export const photos: PhotosConfig = {
 };
 
 export const videos: VideoConfig[] = [
-  { title: "1", src: "/media/video/1.mp4", ratio: "9/16" },
-  { title: "Snapchat-442252830", src: "/media/video/Snapchat-442252830.mp4", ratio: "16/9" },
+  { title: "1", src: "/media/video/2-landscape.mp4", ratio: "16/9" },
+  { title: "2", src: "/media/video/1.mp4", ratio: "9/16" },
 ];
 
 export const collage: CollageConfig = {

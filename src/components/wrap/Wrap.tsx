@@ -111,7 +111,7 @@ export default function Wrap({ remaining, target, rewrap, onPrime, onOpenStart, 
   }, [finalSeconds]);
 
   const handleKnot = () => {
-    party.setSound(true);
+    party.setSound(party.soundOn);
     unwrap();
   };
 
@@ -253,10 +253,11 @@ export default function Wrap({ remaining, target, rewrap, onPrime, onOpenStart, 
             type="button"
             onClick={party.toggleSound}
             aria-pressed={party.soundOn}
+            aria-label={party.soundOn ? "Mute music after unwrap" : "Play music after unwrap"}
             className="display inline-flex w-fit items-center gap-2.5 rounded-full border-2 border-milk/70 px-5 py-3 text-base text-milk transition-colors hover:bg-milk hover:text-cobalt"
           >
             {party.soundOn ? <Volume2 size={20} aria-hidden /> : <VolumeX size={20} aria-hidden />}
-            {party.soundOn ? "Sound is on" : <span>Turn sound on<span className="max-sm:hidden"> for the big moment</span></span>}
+            {party.soundOn ? "Music on after unwrap" : "Music muted"}
           </button>
         </footer>
       </motion.div>

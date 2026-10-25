@@ -8,7 +8,6 @@ import Numbers from "./Numbers";
 import Story from "./Story";
 import Moments from "./Moments";
 import Reasons from "./Reasons";
-import Wishes from "./Wishes";
 import { VideoMessage } from "./videomessage";
 import { Collage } from "./collage";
 import Cake from "./Cake";
@@ -44,7 +43,6 @@ export default function Site({ onReplay, revealed }: { onReplay: () => void; rev
       <Story />
       <Moments />
       <Reasons />
-      <Wishes />
       <VideoMessage />
       <Collage />
       <Cake />
