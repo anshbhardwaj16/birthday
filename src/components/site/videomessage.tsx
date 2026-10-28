@@ -12,7 +12,10 @@ import styles from "@/components/media/media.module.css";
 
 const PART_EASE: [number, number, number, number] = [0.7, 0, 0.3, 1];
 
-type FullscreenVideo = HTMLVideoElement & { webkitDisplayingFullscreen?: boolean };
+type FullscreenVideo = HTMLVideoElement & {
+  webkitDisplayingFullscreen?: boolean;
+  webkitEnterFullscreen?: () => void;
+};
 
 export function VideoMessage() {
   const headingId = useId();
@@ -24,24 +27,26 @@ export function VideoMessage() {
   return (
     <section aria-labelledby={headingId} className={clsx(styles.vars, styles.band, styles.screening)}>
       <MediaHeading id={headingId} title="Videos" />
-      <div className="mx-auto mb-6 flex max-w-[60rem] flex-wrap justify-center gap-3">
-        {videos.map((item, index) => (
-          <button
-            key={item.src}
-            type="button"
-            aria-pressed={selected === index}
-            onClick={() => setSelected(index)}
-            className={clsx(
-              "rounded-full border px-5 py-3 text-sm font-semibold transition-colors",
-              selected === index
-                ? "border-[var(--m-gold)] bg-[var(--m-gold)] text-[var(--m-stage)]"
-                : "border-white/40 text-white hover:border-white",
-            )}
-          >
-            {item.title}
-          </button>
-        ))}
-      </div>
+      {videos.length > 1 ? (
+        <div className="mx-auto mb-6 flex max-w-[60rem] flex-wrap justify-center gap-3">
+          {videos.map((item, index) => (
+            <button
+              key={item.src}
+              type="button"
+              aria-pressed={selected === index}
+              onClick={() => setSelected(index)}
+              className={clsx(
+                "rounded-full border px-5 py-3 text-sm font-semibold transition-colors",
+                selected === index
+                  ? "border-[var(--m-gold)] bg-[var(--m-gold)] text-[var(--m-stage)]"
+                  : "border-white/40 text-white hover:border-white",
+              )}
+            >
+              {item.title}
+            </button>
+          ))}
+        </div>
+      ) : null}
       <VideoStage key={current.src} item={current} />
     </section>
   );
@@ -53,6 +58,7 @@ function VideoStage({ item }: { item: (typeof videos)[number] }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [open, setOpen] = useState(false);
   const [watched, setWatched] = useState(false);
+  const [playError, setPlayError] = useState<string | null>(null);
   const reduce = useReducedMotion();
   const inView = useInView(stageRef, { amount: 0.3 });
 
@@ -71,15 +77,59 @@ function VideoStage({ item }: { item: (typeof videos)[number] }) {
     };
   }, []);
 
+  useEffect(() => {
+    const element = videoRef.current as FullscreenVideo | null;
+    const stage = stageRef.current;
+    if (!element || !open) return;
+
+    const exitFullscreen = () => {
+      if (document.fullscreenElement === stage || element.webkitDisplayingFullscreen) return;
+      element.pause();
+      setOpen(false);
+    };
+
+    document.addEventListener("fullscreenchange", exitFullscreen);
+    element.addEventListener("webkitendfullscreen", exitFullscreen);
+    return () => {
+      document.removeEventListener("fullscreenchange", exitFullscreen);
+      element.removeEventListener("webkitendfullscreen", exitFullscreen);
+    };
+  }, [open]);
+
   const start = () => {
-    setOpen(true);
-    const element = videoRef.current;
+    setPlayError(null);
+    const element = videoRef.current as FullscreenVideo | null;
+    const stage = stageRef.current;
     if (!element) return;
     if (element.ended) element.currentTime = 0;
-    // Called straight from the tap, so the browser allows sound.
-    element.play().catch(() => {
-      // Blocked or interrupted. The native controls are showing, so a second tap works.
+
+    if (!stage?.requestFullscreen && !element.webkitEnterFullscreen) {
+      setPlayError("Full-screen video playback isn't supported in this browser.");
+      return;
+    }
+
+    setOpen(true);
+    const playback = element.play();
+    playback.catch(() => {
+      setOpen(false);
+      setPlayError("Video playback couldn't start. Please try again.");
     });
+
+    if (stage?.requestFullscreen) {
+      stage.requestFullscreen().catch(() => {
+        element.pause();
+        setOpen(false);
+        setPlayError("Full-screen playback couldn't start. Please try again.");
+      });
+    } else {
+      try {
+        element.webkitEnterFullscreen?.();
+      } catch {
+        element.pause();
+        setOpen(false);
+        setPlayError("Full-screen playback couldn't start. Please try again.");
+      }
+    }
   };
 
   const curtain = (side: "left" | "right") => (
@@ -133,6 +183,7 @@ function VideoStage({ item }: { item: (typeof videos)[number] }) {
             )}
             {watched ? "Watch again" : "Play the video"}
           </button>
+          {playError ? <p role="alert">{playError}</p> : null}
         </div>
       ) : null}
     </div>

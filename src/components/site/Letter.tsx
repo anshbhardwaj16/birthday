@@ -124,7 +124,20 @@ export default function Letter() {
   };
 
   return (
-    <Section id="letter" className="bg-milk" innerClassName="grid items-center gap-14 lg:grid-cols-[0.85fr_1.15fr]">
+    <Section
+      id="letter"
+      className="relative isolate overflow-hidden"
+      innerClassName="relative z-10 grid items-center gap-14 lg:grid-cols-[0.85fr_1.15fr]"
+    >
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgb(247 245 255 / 0.78), rgb(247 245 255 / 0.78)), url('/media/photos/IMG-20261028-WA0013.jpg')",
+          backgroundPosition: "90% center",
+        }}
+      />
       <div>
         <h2 className={H2}>A letter, just for you.</h2>
         <p className="voice mt-6 max-w-[22ch] text-[clamp(1.5rem,2.6vw,2.2rem)] text-ink/80">

@@ -291,6 +291,18 @@
   --max: 23rem;
 }
 
+.stage:fullscreen,
+.stage:-webkit-full-screen {
+  position: fixed;
+  inset: 0;
+  width: min(100vw, calc(100vh * var(--ratio)));
+  height: min(100vh, calc(100vw / var(--ratio)));
+  max-width: none;
+  margin: 0;
+  border-radius: 0;
+  aspect-ratio: var(--ratio);
+}
+
 .video {
   position: absolute;
   inset: 0;

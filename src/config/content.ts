@@ -18,7 +18,7 @@ export const content = {
     greeting: `Dear ${name},`,
     paragraphs: [
       "I wanted to give you something that I know the best, and you love the most so I made this. I am creating this when I am missing you the most.",
-      "I know you as well as myself were manifesting to celebrate your birthday together, but you know the situation, nvm we will plan a vacation along with Manish Mama in next month.🏖️",
+      "I know you as well as myself were manifesting to celebrate your birthday together, but you know the situation, nvm we will soon plan a banger vacation.🏖️",
       "You know you are my first and only love, I love you to the moon and back. May this year brings you everything you want.🤞",
     ],
     signoff:[ "With all my love❤️,",
@@ -66,7 +66,6 @@ export const content = {
     { tone: 1, alt: "Photo 2", image: "/media/photos/IMG-20260713-WA0199.jpg" },
     { tone: 2, alt: "Photo 3", image: "/media/photos/IMG-20260713-WA0200.jpg" },
     { tone: 3, alt: "Photo 4", image: "/media/photos/IMG-20260713-WA0204-2.jpg" },
-    // { tone: 4, alt: "Photo 5", image: "/media/photos/IMG-20260713-WA0204.jpg" },
     { tone: 5, alt: "Photo 6", image: "/media/photos/IMG-20260713-WA0207.jpg" },
     { tone: 0, alt: "Photo 7", image: "/media/photos/IMG-20260713-WA0235.jpg" },
     { tone: 1, alt: "Photo 8", image: "/media/photos/Snapchat-1040214177.jpg" },
