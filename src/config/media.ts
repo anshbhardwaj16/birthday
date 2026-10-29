@@ -70,7 +70,8 @@ export const photos: PhotosConfig = {
 };
 
 export const videos: VideoConfig[] = [
-  { title: "2", src: "/media/video/Screen_Recording_20261028_234000_Instagram.mp4", ratio: "9/16" },
+  { title: "❤️‍🔥", src: "/media/video/Screen_Recording_20261028_234000_Instagram.mp4", ratio: "9/16" },
+  { title: "💖", src: "/media/video/Screen_Recording_20261029_180808_Instagram.mp4", ratio: "4/5" },
 ];
 
 export const collage: CollageConfig = {
