@@ -7,6 +7,7 @@ import Section, { H2 } from "./Section";
 import { useParty } from "../PartyProvider";
 import { content } from "@/config/content";
 import { settings } from "@/config/settings";
+import { assetPath } from "@/lib/paths";
 
 type Stage = "sealed" | "opening" | "open";
 
@@ -134,7 +135,7 @@ export default function Letter() {
         className="absolute inset-0 bg-cover bg-center"
         style={{
           backgroundImage:
-            "linear-gradient(rgb(247 245 255 / 0.78), rgb(247 245 255 / 0.78)), url('/media/photos/IMG-20261028-WA0013.jpg')",
+            `linear-gradient(rgb(247 245 255 / 0.78), rgb(247 245 255 / 0.78)), url('${assetPath("/media/photos/IMG-20261028-WA0013.jpg")}')`,
           backgroundPosition: "90% center",
         }}
       />

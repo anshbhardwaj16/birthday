@@ -8,6 +8,7 @@ import { useParty } from "../PartyProvider";
 import { settings } from "@/config/settings";
 import { content } from "@/config/content";
 import { turningAge } from "@/lib/dates";
+import { assetPath } from "@/lib/paths";
 
 const LINES = ["Happy", "Birthday", settings.name];
 const LONGEST = Math.max(...LINES.map((l) => l.length));
@@ -127,7 +128,7 @@ export default function Hero({ revealed }: { revealed: boolean }) {
       className="relative isolate flex min-h-[100svh] flex-col overflow-hidden px-[clamp(1.1rem,4vw,4rem)] pb-[clamp(1.5rem,4vw,3rem)] pt-24 text-ink"
       style={{
         backgroundImage:
-          "linear-gradient(0deg, rgb(255 217 90 / 0.96) 0%, rgb(255 217 90 / 0.72) 27%, rgb(255 217 90 / 0.12) 68%, rgb(255 217 90 / 0.08) 100%), url('/media/photos/IMG-20261028-WA0015.jpg')",
+          `linear-gradient(0deg, rgb(255 217 90 / 0.96) 0%, rgb(255 217 90 / 0.72) 27%, rgb(255 217 90 / 0.12) 68%, rgb(255 217 90 / 0.08) 100%), url('${assetPath("/media/photos/IMG-20261028-WA0015.jpg")}')`,
         backgroundPosition: "center 38%",
         backgroundSize: "cover",
       }}
